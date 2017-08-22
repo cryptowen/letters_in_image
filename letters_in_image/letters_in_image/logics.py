@@ -12,6 +12,7 @@ logger = logging.getLogger('letters_in_image')
 class LettersInImage(object):
 
     letters_to_extract = set(letters)
+    largest_image_size = 5 * 1024 * 1024
 
     # all the error messages
     no_image_data_err = {'error_code': 1, 'message': 'no image data'}
@@ -27,7 +28,7 @@ class LettersInImage(object):
             return self.no_image_data_err
 
         image_data = ''.join(self.raw_image.chunks())
-        if len(image_data) > 5 * 1024 * 1024:
+        if len(image_data) > self.largest_image_size:
             return self.image_too_large_err
 
         try:
