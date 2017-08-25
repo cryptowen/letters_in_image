@@ -6,6 +6,7 @@ import StringIO
 import pytest
 
 url = '/letters_in_image/'
+dir = os.path.dirname(__file__)
 
 
 def test_no_image(client):
@@ -31,7 +32,18 @@ def test_wrong_format(client):
     assert response.status_code == 200
     data = json.loads(response.content)
     print(data)
-    assert data['error_code'] == 3
+    assert data['error_code'] == 5
+
+
+def test_fail_to_ocr(client, mocker):
+    m = mocker.patch('letters_in_image.util.image_to_string')
+    m.side_effect = Exception("fail to orc")
+    params = {'image': open(os.path.join(dir, 'test.png'))}
+    response = client.post(url, params)
+    assert response.status_code == 200
+    data = json.loads(response.content)
+    print(data)
+    assert data['error_code'] == 4
 
 
 @pytest.mark.parametrize(
@@ -52,7 +64,6 @@ def test_wrong_format(client):
     ]
 )
 def test_normal(client, image_path, content):
-    dir = os.path.dirname(__file__)
     params = {'image': open(os.path.join(dir, image_path))}
     response = client.post(url, params)
     assert response.status_code == 200

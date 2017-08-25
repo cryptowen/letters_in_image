@@ -2,7 +2,7 @@
 from cStringIO import StringIO
 from PIL import Image
 from string import letters
-import util
+from letters_in_image import util
 import logging
 
 
@@ -19,6 +19,7 @@ class LettersInImage(object):
     image_too_large_err = {'error_code': 2, 'message': 'image can be no more than 5 MB'}
     wrong_format_err = {'error_code': 3, 'message': 'image can only be jpg/png format'}
     fail_to_ocr_err = {'error_code': 4, 'message': 'fail to extract data from image, please try again'}
+    not_image_err = {'error_code': 5, 'message': 'file should be jpg/png image'}
 
     def __init__(self, raw_image):
         self.raw_image = raw_image
@@ -35,7 +36,7 @@ class LettersInImage(object):
             self.image_obj = Image.open(StringIO(image_data))
         except Exception:
             logger.exception('fail to open file with PIL')
-            return self.wrong_format_err
+            return self.not_image_err
 
         if self.image_obj.format.lower() not in ['jpg', 'png', 'jpeg']:
             return self.wrong_format_err
