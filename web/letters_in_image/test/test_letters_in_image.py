@@ -35,7 +35,7 @@ def test_wrong_format(client):
 
 
 def test_fail_to_ocr(client, mocker):
-    m = mocker.patch('letters_in_image.util.image_to_string')
+    m = mocker.patch('letters_in_image.ocr.image_to_string')
     m.side_effect = Exception("fail to orc")
     params = {'image': open(os.path.join(dir, 'test.png'))}
     response = client.post(url, params)

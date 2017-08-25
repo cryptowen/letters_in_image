@@ -2,7 +2,7 @@
 from io import BytesIO
 from PIL import Image
 from string import ascii_letters as letters
-from letters_in_image import util, mongodb
+from letters_in_image import ocr, mongodb
 import logging
 import datetime
 from bson import Binary
@@ -51,7 +51,7 @@ class LettersInImage(object):
             return check_res
 
         try:
-            self.txt = util.image_to_string(self.image_obj)
+            self.txt = ocr.image_to_string(self.image_obj)
         except Exception:
             logger.exception('fail to ocr from image')
             return self.fail_to_ocr_err
