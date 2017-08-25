@@ -1,0 +1,8 @@
+django
+pillow
+pymongo
+pyocr
+ipython
+pytest
+pytest-django
+pytest-mock
