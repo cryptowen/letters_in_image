@@ -71,11 +71,10 @@ Out[1]: MongoClient(host=['db:27017'], document_class=dict, tz_aware=False, conn
 In [2]: records = list(client['db']['collection'].find())
 ```
 
-## Future Plan
+## 其他说明
 
-## Others
-
-- Database is not neci
+- DB 在此处非必要，仅做存储备用，并发量大后可能成为瓶颈，可以 sharding 或替换为消息队列，异步消费入库
+- service 功能仅依赖 python 和 Tesseract-OCR, 理论上可以无限横向扩展
 
 ## References
 
