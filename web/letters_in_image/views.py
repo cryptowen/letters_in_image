@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.http import JsonResponse, HttpResponse
-import logics
+from letters_in_image import logics
 
 
 def index(request):
     msg = '''visit
     '''
     return HttpResponse(msg)
-
 
 
 def letters_in_image(request):

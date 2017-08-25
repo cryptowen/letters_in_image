@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
+from io import BytesIO
 import os
-from django.test import Client
 import json
-import StringIO
 import pytest
 
 url = '/letters_in_image/'
@@ -18,7 +17,7 @@ def test_no_image(client):
 
 
 def test_large_file(client):
-    params = {'image': StringIO.StringIO('a' * 6 * 2**20)}
+    params = {'image': BytesIO(b'a' * 6 * 2**20)}
     response = client.post(url, params)
     assert response.status_code == 200
     data = json.loads(response.content)
@@ -27,7 +26,7 @@ def test_large_file(client):
 
 
 def test_wrong_format(client):
-    params = {'image': StringIO.StringIO('a' * 4 * 2**20)}
+    params = {'image': BytesIO(b'a' * 4 * 2**20)}
     response = client.post(url, params)
     assert response.status_code == 200
     data = json.loads(response.content)

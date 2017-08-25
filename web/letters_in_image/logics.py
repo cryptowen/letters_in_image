@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
-from cStringIO import StringIO
+from io import BytesIO
 from PIL import Image
-from string import letters
-from letters_in_image import util
+from string import ascii_letters as letters
+from letters_in_image import util, mongodb
 import logging
+import datetime
+from bson import Binary
+import hashlib
+from django.conf import settings
 
 
 logger = logging.getLogger('letters_in_image')
@@ -28,12 +32,12 @@ class LettersInImage(object):
         if not self.raw_image:
             return self.no_image_data_err
 
-        image_data = ''.join(self.raw_image.chunks())
-        if len(image_data) > self.largest_image_size:
+        self.image_data = b''.join(self.raw_image.chunks())
+        if len(self.image_data) > self.largest_image_size:
             return self.image_too_large_err
 
         try:
-            self.image_obj = Image.open(StringIO(image_data))
+            self.image_obj = Image.open(BytesIO(self.image_data))
         except Exception:
             logger.exception('fail to open file with PIL')
             return self.not_image_err
@@ -47,13 +51,30 @@ class LettersInImage(object):
             return check_res
 
         try:
-            txt = util.image_to_string(self.image_obj)
+            self.txt = util.image_to_string(self.image_obj)
         except Exception:
             logger.exception('fail to ocr from image')
             return self.fail_to_ocr_err
 
-        l = sorted(set(txt) & self.letters_to_extract)
+        self.content = sorted(set(self.txt) & self.letters_to_extract)
         res = {
-            'content': l,
+            'content': self.content,
         }
+        self.save_to_db()
         return res
+
+    def save_to_db(self):
+        try:
+            md5 = hashlib.md5(self.image_data).hexdigest()
+            d = {
+                'contents': self.content,
+                'ocr_txt': self.txt,
+                'image': Binary(self.image_data),
+                'create_time': datetime.datetime.now(),
+                'md5': md5,
+            }
+            mongodb.client[settings.MONGO_DATABASE][settings.MONGO_COLLECTION].insert_one(d)
+        except Exception:
+            logger.exception('fail to save db')
+
+
