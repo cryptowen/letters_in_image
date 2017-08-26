@@ -17,5 +17,5 @@ RUN apt-get update \
 RUN mkdir /code
 WORKDIR /code
 ADD requirements.txt /code/
-ADD . /code/
 RUN pip install --no-cache-dir -r requirements.txt
+ADD . /code/
