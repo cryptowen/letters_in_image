@@ -134,8 +134,3 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
-MONGO_HOST = 'db'
-MONGO_PORT = 27017
-MONGO_DATABASE = 'db'
-MONGO_COLLECTION = 'collection'

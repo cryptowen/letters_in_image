@@ -19,4 +19,3 @@ RUN mkdir /code
 WORKDIR /code
 ADD requirements.txt /code/
 RUN pip install -r requirements.txt
-ENV DJANGO_SETTINGS_MODULE "letters_in_image.settings_dev"

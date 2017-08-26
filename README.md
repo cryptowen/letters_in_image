@@ -4,7 +4,7 @@ A web API which can take an uploaded image(jpg, png) and find any letters in it.
 
 ## Quickstart with docker and docker-compose
 
-```
+```sh
 $ git clone git@github.com:huwenchao/letters_in_image.git
 $ cd letters_in_image/web
 $ docker-compose up
@@ -38,7 +38,7 @@ Just edit the code in `/web`, the server will reload automatically.
 
 ## Test
 
-```
+```sh
 $ docker-compose run web pytest
 ==================================================================== test session starts =====================================================================
 platform linux2 -- Python 2.7.13, pytest-3.2.1, py-1.4.34, pluggy-0.4.0
@@ -54,7 +54,7 @@ letters_in_image/test/test_letters_in_image.py ......
 
 ## Interact with database
 
-```
+```sh
 $ docker-compose run web ipython -i letters_in_image/mongodb.py
 Python 2.7.13 (default, Jul 24 2017, 20:13:18)
 Type "copyright", "credits" or "license" for more information.
