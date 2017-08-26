@@ -1,8 +1,5 @@
-run_dev:
+run:
 	docker-compose up --build
-
-run_product:
-	docker-compose -f production.yml up --build
 
 test:
 	docker-compose run web pytest
