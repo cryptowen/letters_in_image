@@ -1,4 +1,4 @@
-FROM python:2
+FROM python:3
 ENV PYTHONUNBUFFERED 1
 RUN echo 'deb http://mirrors.aliyun.com/debian/ jessie main non-free contrib' > /etc/apt/sources.list \
 && echo 'deb http://mirrors.aliyun.com/debian/ jessie-proposed-updates main non-free contrib' >> /etc/apt/sources.list \

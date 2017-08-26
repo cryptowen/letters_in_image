@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.http import JsonResponse, HttpResponse
-from letters_in_image import logics
+from . import logics
 
 
 def index(request):

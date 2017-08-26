@@ -2,7 +2,7 @@
 from io import BytesIO
 from PIL import Image
 from string import ascii_letters as letters
-from letters_in_image import ocr, mongodb
+from . import ocr, mongodb
 import logging
 import datetime
 from bson import Binary

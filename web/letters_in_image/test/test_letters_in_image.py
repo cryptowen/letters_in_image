@@ -37,7 +37,7 @@ def test_wrong_format(client):
 def test_fail_to_ocr(client, mocker):
     m = mocker.patch('letters_in_image.ocr.image_to_string')
     m.side_effect = Exception("fail to orc")
-    params = {'image': open(os.path.join(dir, 'test.png'))}
+    params = {'image': BytesIO(open(os.path.join(dir, 'test.png'), 'rb').read())}
     response = client.post(url, params)
     assert response.status_code == 200
     data = json.loads(response.content)
@@ -63,7 +63,7 @@ def test_fail_to_ocr(client, mocker):
     ]
 )
 def test_normal(client, image_path, content):
-    params = {'image': open(os.path.join(dir, image_path))}
+    params = {'image': BytesIO(open(os.path.join(dir,image_path), 'rb').read())}
     response = client.post(url, params)
     assert response.status_code == 200
     data = json.loads(response.content)
