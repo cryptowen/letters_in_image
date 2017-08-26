@@ -3,12 +3,12 @@ services:
   db:
     image: mongo
   web:
-    build: .
+    build: ./web
     environment:
       - DJANGO_SETTINGS_MODULE=letters_in_image.settings.dev
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/code
+      - ./web:/code
     ports:
       - "8000:8000"
     depends_on:

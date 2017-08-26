@@ -1,11 +1,10 @@
 FROM python:3
 ENV PYTHONUNBUFFERED 1
+
+# 安装tesseract-ocr
 RUN echo 'deb http://mirrors.aliyun.com/debian/ jessie main non-free contrib' > /etc/apt/sources.list \
 && echo 'deb http://mirrors.aliyun.com/debian/ jessie-proposed-updates main non-free contrib' >> /etc/apt/sources.list \
 && echo 'deb http://mirrors.aliyun.com/debian-security/ jessie/updates main non-free contrib' >> /etc/apt/sources.list
-
-
-# 安装tesseract-ocr
 RUN apt-get update \
     && apt-get install -y \
         leptonica-progs \
@@ -18,4 +17,5 @@ RUN apt-get update \
 RUN mkdir /code
 WORKDIR /code
 ADD requirements.txt /code/
-RUN pip install -r requirements.txt
+ADD . /code/
+RUN pip install --no-cache-dir -r requirements.txt

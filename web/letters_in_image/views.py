@@ -4,8 +4,7 @@ from . import logics
 
 
 def index(request):
-    msg = '''visit
-    '''
+    msg = '''hello world'''
     return HttpResponse(msg)
 
 
