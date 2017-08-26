@@ -6,19 +6,19 @@ A web API which can take an uploaded image(jpg, png) and find any letters in it.
 
 ```sh
 $ git clone git@github.com:huwenchao/letters_in_image.git
-$ cd letters_in_image/web
+$ cd letters_in_image
 $ docker-compose up
 
 # in another console
 $ cd path/to/the/project
 
 # normal response
-$ curl localhost:8000/letters_in_image/ -X post -F image=@web/letters_in_image/test/test.png
+$ curl localhost:8000/letters_in_image/ -X POST -F image=@web/letters_in_image/test/test.png
 {"content": ["T", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]}%
 
 # error response
 $ touch /tmp/a
-$ curl localhost:8000/letters_in_image/ -X post -F image=@/tmp/a
+$ curl localhost:8000/letters_in_image/ -X POST -F image=@/tmp/a
 {"message": "file should be jpg/png image", "error_code": 5}%
 ```
 
